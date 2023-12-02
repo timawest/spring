@@ -1,29 +1,23 @@
 package xyz.rbulatov.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
 @Table(name = "customer")
+@Data
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "name")
-    private String name;
 
-    public Long getId() {
-        return id;
-    }
+    @Column(name = "last_name")
+    private String lastName;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Column(name = "first_name")
+    private String firstName;
 
-    public String getName() {
-        return name;
-    }
+    @Column(name = "age")
+    private Integer age;
 
-    public void setName(String name) {
-        this.name = name;
-    }
 }
