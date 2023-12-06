@@ -1,14 +1,18 @@
 package xyz.rbulatov.service;
 
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import xyz.rbulatov.dto.CustomerDto;
+import xyz.rbulatov.exception.ResourceNotFoundException;
 import xyz.rbulatov.model.Customer;
 import xyz.rbulatov.repository.CustomerRepository;
 import xyz.rbulatov.repository.specifications.CustomerSpecifications;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -35,5 +39,25 @@ public class CustomerService {
 
     public List<Customer> findAllCustomers(){
         return repository.findAll();
+    }
+
+    public Customer saveNewCustomer(Customer customer){
+        return repository.save(customer);
+    }
+    @Transactional
+    public Customer updateCustomer(CustomerDto customerDto){
+        Customer customer = repository.findById(customerDto.getId()).orElseThrow(() -> new ResourceNotFoundException("Невозможно обновить пользователя"));
+        customer.setFirstName(customerDto.getFirstName());
+        customer.setLastName(customerDto.getLastName());
+        customer.setAge(customerDto.getAge());
+        return customer;
+    }
+
+    public Optional<Customer> findById(Long id){
+        return repository.findById(id);
+    }
+
+    public void deleteById(Long id){
+        repository.deleteById(id);
     }
 }
