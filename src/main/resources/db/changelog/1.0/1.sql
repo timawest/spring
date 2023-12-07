@@ -3,5 +3,7 @@
 
 CREATE TABLE customer(
    id bigserial PRIMARY KEY,
-   name VARCHAR(40)
+   last_name VARCHAR(40),
+   first_name VARCHAR(40),
+   age INTEGER
 );
